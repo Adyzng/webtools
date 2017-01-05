@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %} Arcserve Online Toolkit {% endblock title %}
+
+{% block styles %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock styles%}
+
+
+{% block page_panel_1 -%}
+<div id="ftpPage">
+	<div class="page-header">
+		<h3>Time Convert</h3>
+		<small class="form-text text-muted">Convert between local time, UTC time and seconds since 1970.01.01 00:00:00.</small>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12 col-md-8 mt-10">
+			<form id="idTimeConvertFrm" class="form" action="#">
+				<div class="form-group">
+					<label class="control-label" for="idSeconds">Seconds</label>
+					<div class="input-group">
+						<input type="number" class="form-control" id="idSeconds" name="second" placeholder="123456789">
+						<span class="input-group-btn">
+							<button class="btn btn-default" data-target="#idSeconds">now</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="idUTCTime">UTC Time</label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="idUTCTime" name="utcTime" placeholder="YYYY-mm-DD HH:MM:SS">
+						<span class="input-group-btn">
+							<button class="btn btn-default" data-target="#idUTCTime">now</button>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="idLocalTime">Local Time</label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="idLocalTime" name="localTime" placeholder="YYYY-mm-DD HH:MM:SS">
+						<span class="input-group-btn">
+							<button class="btn btn-default" data-target="#idLocalTime">now</button>
+						</span>
+					</div>
+					<small id="idLocalTZ" class="form-text text-muted">&nbsp;</small>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary width-100" id="idConvertBtn">Convert</button>
+					<button type="reset" class="btn btn-primary width-100">Reset</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock page_panel_1 %}
+
+
+
+{% block scripts %}
+    {{ super() }}
+	<!-- The file cookie wrapper script -->
+	<script src="{{ url_for('static', filename='js/js.cookie.js') }}"></script>
+	<!-- Textarea autogrowth-->
+	<script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+	<!-- The main application script -->
+	<script src="{{ url_for('static', filename='js/udp.toolkit.js') }}"></script>
+	<!-- TreeGrid plugin -->
+	<script src="{{ url_for('static', filename='js/jquery.ztree.all.min.js') }}"></script>
+{% endblock scripts%}

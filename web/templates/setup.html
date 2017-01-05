@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %} Arcserve Online Toolkit {% endblock title %}
+
+{% block styles %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	<style type="text/css">
+		.panel {border: 0px;}
+	</style>
+{% endblock styles%}
+
+{% block page_body %}
+<div class="col-md-offset-3 col-md-6 main">
+	<div id="pageOne" class="panel panel-info">
+		<div class="panel-body">
+			<div class="">
+				<div class="page-header">
+					<h3>Harvest</h3>
+				</div>
+				<div id="harvetInfo" class="form" action="#">
+					<div class="form-group">
+						<label class="control-label" for="harvHome">Install Path</label>
+						<input type="text" class="form-control" id="harvHome" name="homePath" value="{{ env.harvest.home }}">
+						<!--
+							<div class="input-group">
+								<input type="text" class="form-control" id="harvHome" name="homePath">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" disabled>
+										<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+										Browse
+									</button>
+								</span>
+							</div>
+							-->
+						{% if env.harvest.home %}
+							<small class="form-text text-muted">harvest client installion path.</small>
+						{% else %}
+							<small class="form-text text-error">NO harvest client installed. Please manually install it.</small>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="harvUser">User Name</label>
+						<input type="text" class="form-control" id="harvUser" name="harvUser" value="{{ env.harvest.username }}">
+						<small class="form-text text-muted">user name used to checkout files from harvest server.</small>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="harvPswd">User Password</label>
+						<input type="password" class="form-control" id="harvPswd" name="harvPswd" value="{{ env.harvest.userpswd }}">
+						<small class="form-text text-muted">harvest user password</small>
+					</div>
+					<div class="form-group">
+						<div class="pull-right">
+							<button id="btnPrevOne" type="button" class="btn btn-default width-100 collapse">
+								<i class="fa fa-angle-left" aria-hidden="true"></i> prev
+							</button>
+							<button id="btnOneNext" type="button" class="btn btn-default width-100">
+								next <i class="fa fa-angle-right" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="pageTwo" class="panel panel-info collapse">
+		<div class="panel-body">
+			<div class="">
+				<div class="page-header">
+					<h3>Ftp Server</h3>
+				</div>
+				<div id="redirectFtp" class="form" action="#">
+					<input type="hidden" id="ftpName" name="ftpName" value="{{ env.ftp.name }}">
+					<div class="form-group">
+						<label class="control-label" for="ftpHost">Ftp Host</label>
+						<input type="text" class="form-control" id="ftpHost" name="ftpHost" value="{{ env.ftp.server }}">
+						<small class="form-text text-muted">ftp server address. Eg: ftp://127.0.0.1</small>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="ftpUser">Ftp User</label>
+						<input type="text" class="form-control" id="ftpUser" name="ftpUser" value="{{ env.ftp.username }}">
+						<small class="form-text text-muted">ftp server username</small>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="ftpPswd">Ftp Password</label>
+						<input type="password" class="form-control" id="ftpPswd" name="ftpPswd" value="{{ env.ftp.password }}">
+						<small class="form-text text-muted">ftp server Password</small>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="ftpSubp">Ftp Subpath</label>
+						<input type="text" class="form-control" id="ftpSubp" name="ftpSubp" value="{{ env.ftp.rootpath }}">
+						<small class="form-text text-muted">subpath on ftp server used to save redirect files.</small>
+					</div>
+					<div class="form-group">
+						<div class="pull-right">
+							<button id="btnPrevOne" class="btn btn-default width-100">
+								<i class="fa fa-angle-left" aria-hidden="true"></i> prev
+							</button>
+							<button id="btnTwoNext" class="btn btn-default width-100">
+								next <i class="fa fa-angle-right" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="pageThree" class="panel panel-info collapse">
+		<div class="panel-body">
+			<div class="">
+				<div class="page-header">
+					<h3>Redirect Files</h3>
+				</div>
+				<div id="redirectFtp" class="form" action="#">
+					<div class="form-group">
+						<label class="form-control-label" for="rdtConfig">Configure File</label>
+						<input type="text" class="form-control" id="rdtConfig" name="rdtConfig" value="{{ env.redirect.config }}">
+						{% if env.redirect.config %}
+							<small class="form-text text-muted">Default configure file used to checkout redirect files from harvest.</small>
+						{% else %}
+							<small class="form-text text-muted">Specify the configure file used to checkout from harvest.</small>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="rdtLpath">Local Path</label>
+						<input type="text" class="form-control" id="rdtLpath" name="rdtLpath" value="{{ env.redirect.path }}">
+						<small class="form-text text-muted">Local directory used to save redirect files checkout from harvest.</small>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="rdtFtpSvr">Ftp Server</label>
+						<select class="form-control" id="rdtFtpSvr"> 
+							<option class="list-group-item-text"></option>
+							<option class="list-group-item-text" selected>{{ env.ftp.server }}</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<div class="pull-right">
+							<button id="btnPrevOne" type="button" class="btn btn-default width-100">
+								<i class="fa fa-angle-left" aria-hidden="true"></i> prev
+							</button>
+							<button id="btnThreeNext" type="button" class="btn btn-default width-100">
+								next <i class="fa fa-angle-right" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="pageFour" class="panel panel-info collapse">
+		<div class="panel-body">
+			<div class="">
+				<div class="page-header">
+					<h3>Unified Data Protection</h3>
+				</div>
+				<div id="udpInfo" class="form" action="#">
+					<div class="form-group">
+						<label class="control-label" for="harvHome">Install Path</label>
+						<input type="text" class="form-control" id="udpBin" name="udpBin" value="{{ env.environ.udpbin }}">
+						{% if env.environ.udpbin %}
+							<small class="form-text text-muted">Arcserve UDP agent installion bin path.</small><br/>
+						{% else %}
+							<small class="form-text text-error">No Arcserve UDP installed. This is not necessary part.</small>
+						{% endif %}
+					</div>
+					<div class="form-group">
+						<div class="pull-right">
+							<button id="btnPrevOne" type="button" class="btn btn-default width-100">
+								<i class="fa fa-angle-left" aria-hidden="true"></i> prev
+							</button>
+							<button id="btnComplete" type="button" class="btn btn-default width-100">
+								finish <i class="fa fa-angle-right" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock page_body %}
+
+{% block scripts %}
+    {{ super() }}
+	<script src="{{ url_for('static', filename='js/setup.js') }}"></script>
+{% endblock scripts%}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %} Arcserve Online Toolkit {% endblock title %}
+
+{% block styles %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock styles%}
+
+
+{% block page_panel_1 -%}
+<div id="ftpPage">
+	<div class="page-header">
+		<h3>Unicode Escape</h3>
+		<small class="form-text text-muted">Escape or unescape unicode string.</small>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12 col-md-8 mt-10>
+			<form id="idEscape" class="form" action="#">
+				<div class="form-group">
+					<label class="control-label" for="idEscaped">Escaped String</label>
+					<textarea class="form-control" rows="5" id="idEscaped" name="base64"></textarea>
+					<small class="form-text text-muted">Format: ① \u4e2d\u6587   ② %u4e2d%u6587</small>
+					<!-- ①②③④⑤⑥⑦⑧⑨⑩ -->
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="idStrSrc">Source String</label>
+					<textarea class="form-control" rows="5" id="idStrSrc" name="message"></textarea>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary width-100" id="idEscapeBtn">Convert</button>
+					<button type="reset" class="btn btn-primary width-100">Reset</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock page_panel_1 %}
+
+
+
+{% block scripts %}
+    {{ super() }}
+	<!-- The file cookie wrapper script -->
+	<script src="{{ url_for('static', filename='js/js.cookie.js') }}"></script>
+	<!-- Textarea autogrowth-->
+	<script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+	<!-- The main application script -->
+	<script src="{{ url_for('static', filename='js/udp.toolkit.js') }}"></script>
+	<!-- TreeGrid plugin -->
+	<script src="{{ url_for('static', filename='js/jquery.ztree.all.min.js') }}"></script>
+{% endblock scripts%}

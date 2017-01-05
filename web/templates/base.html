@@ -1,0 +1,103 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html lang="en">
+{%- block html %}
+<head>
+	<!-- Required meta tags always come first -->
+	{%- block metas %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	{% endblock metas %}
+
+	<title>{% block title %}{{ title|default }}{% endblock title %}</title>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+	<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+	
+	{%- block styles %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/loading-style.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+	{% endblock styles %}
+</head>
+
+<body>
+	{% block page_nav -%}
+	<nav class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="/" class="logo">
+					<img src="{{ url_for('static', filename='img/home_logo.gif') }}">
+				</a>
+			</div>
+		</div>
+	</nav>
+	{%- endblock page_nav %}
+	
+
+	{% block page_body -%}
+	<div class="container-fluid">
+		<div class="row">
+			<!-- navbar -->
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li class="{{ 'active' if page == 'ftpup' else '' }}">
+						<a href="{{ url_for('ftpup') }}" title="ftp upload"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> FtpUpload</a>
+					</li>
+					<li class="{{ 'active' if page == 'timec' else '' }}">
+						<a href="{{ url_for('timec') }}" title="time convert"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> TimeConvert</a>
+					</li>
+					<li class="{{ 'active' if page == 'encoding' else '' }}">
+						<a href="{{ url_for('encoding') }}" title="message encoding"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Encoding</a>
+					</li>
+					<li class="{{ 'active' if page == 'unescape' else '' }}">
+						<a href="{{ url_for('unescape') }}" title="unicode escape"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Unicode</a>
+					</li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li class="{{ 'active' if page == 'patch' else '' }}">
+						<a href="{{ url_for('patch') }}" title="patch maker"><i class="fa fa-plus-circle" aria-hidden="true"></i> Patch</a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- body container -->
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				{% block page_panel_1 -%}
+				{% endblock page_panel_1 %}
+
+				{% block page_panel_2 -%}
+				{% endblock page_panel_2 %}
+			</div>
+
+			<!-- footer bar
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<div class="row">
+					{% block footer %}
+					<div class="text-center">
+						<label>Copyright &copy; 2016 Arcserve @ CTC</label>
+					</div>
+					{%- endblock footer %}
+				</div>
+			</div>
+			-->
+		</div>
+	</div>
+	{%- endblock page_body %}
+
+	{% block customraw %}
+	{%- endblock customraw %}
+
+	{% block scripts %}
+	<!-- jQuery first, then Tether, then Bootstrap JS. -->
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<!-- script src="{{ url_for('static', filename='js/tether.min.js') }}"></script -->
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<!-- isLoading -->
+	<script src="{{ url_for('static', filename='js/jquery.isLoading.js') }}"></script>
+	{%- endblock scripts %}
+</body>
+{%- endblock html %}
+</html>
+{% endblock doc %}

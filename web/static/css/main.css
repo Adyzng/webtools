@@ -1,0 +1,138 @@
+.top_bk {
+	background-color: #38304C;
+}
+
+.default {
+	background-color: #ddd;
+}
+
+
+.half-width {
+	width: 50%;
+}
+
+.p80-width {
+	width: 80%;
+}
+
+.width-100 {
+	width: 100px;
+}
+
+.mr-5 {
+	margin-right: 5px;
+}
+.mt-10 {
+	margin-top: 10px;
+}
+
+.mt-20 {
+	margin-top: 20px;
+}
+
+.md-20 {
+	margin-bottom: 20px; 
+}
+
+.md-40 {
+	margin-bottom: 40px; 
+}
+
+.md-5 {
+	margin-bottom: 5px; 
+}
+
+.progress {
+	margin-bottom: 5px; 
+}
+
+.mtd-10 {
+	margin-top: 10px;
+	margin-bottom: 10px; 
+}
+
+.filelist {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.filelist > li {
+	margin-bottom: 5px;
+}
+
+.table th, .table td { 
+	vertical-align: middle!important;
+}
+
+.toolkit-name h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cus-row {
+	padding-top: 20px;
+	margin-right: 0px;
+    margin-left: 0px;
+	margin-bottom: 15px;
+}
+
+
+.panel-heading > a {
+	display: block;
+}
+
+.panel-heading > a:hover,
+.panel-heading > a:focus {
+	text-decoration: none;
+}
+
+.ztree {
+	font-size: 14px;
+}
+
+.badge-sync {
+	color: #333;
+	font-size: 22px;
+	background-color: transparent;
+}
+
+#idUploadModal {
+	min-width: 600px;
+} 
+
+.upload-dlg {
+	max-height: 500px; 
+	overflow: auto;
+}
+
+.upload-dlg .table {
+	table-layout: fixed;
+	word-wrap:break-word;
+}
+
+.upload-dlg .table td {
+	border: none;
+}
+
+.upload-dlg .table tr td:first-child {
+	width: 26px;
+	color: green;
+}
+
+.upload-dlg .table tr td:first-child + td {
+	width: 70%;
+}
+
+
+.home {
+	width: 32px;
+	height: 32px;
+	display: block;
+	background-image: url('/static/img/home.png');
+}
+
+.prog-line {
+	border: 2px solid #428bca;
+	border-radius: 0;
+}

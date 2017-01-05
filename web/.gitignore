@@ -1,0 +1,12 @@
+# logs folder
+logs/
+uploads/
+
+# the other folder
+bk/
+build/
+store/
+nouse/
+
+# python complied files
+*.pyc

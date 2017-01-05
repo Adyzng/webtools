@@ -1,0 +1,44 @@
+{
+    "redirect": {
+        "ftp": "ftpdocs", 
+        "config": "..\\config\\redirect-sync.ini", 
+        "path": "..\\store\\harvest\\v6.5\\RedirectFiles"
+    },
+    "environ": {
+        "webstore": "..\\store", 
+        "udpbin": ""
+    }, 
+    "harvest": {
+        "username": "", 
+        "home": "", 
+        "userfile": ""
+    }, 
+    "i18n": {
+        "ftp": "ftpdocs", 
+        "config": "..\\config\\i18n-sync.ini", 
+        "path": "..\\store\\harvest\\v6.5\\i18n"
+    }, 
+    "ftplist": {
+        "test1": {
+            "username": "admin", 
+            "password": "admin", 
+            "rootpath": "/uploadtest", 
+            "server": "ftp://10.57.19.43", 
+            "localpath": ""
+        }, 
+        "test2": {
+            "username": "admin", 
+            "password": "admin", 
+            "rootpath": "/uploadtest2", 
+            "server": "sftp://10.57.19.43", 
+            "localpath": ""
+        }, 
+        "ftpdocs": {
+            "username": "", 
+            "password": "", 
+            "rootpath": "", 
+            "server": "", 
+            "localpath": ""
+        }
+    }
+}

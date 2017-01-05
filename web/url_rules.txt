@@ -1,0 +1,55 @@
+1 Branchs [POST/GET]
+Format: 
+    <host>/api/branchs/<string:name>
+Return:
+    json array: {branchs:[...]}
+Example:
+    <host>/api/branchs/      <= for all branchs
+    <host>/api/branchs/v5    <= branch v5
+
+
+2. Patchs [POST/GET]
+Format:
+    <host>/api/patchs/get/<string:branch>/<string:pid>
+Return:
+    json array: {patchs:[...]}
+Example:
+    <host>/api/patchs/get/              <= get all available patch 
+    <host>/api/patchs/get/v5/           <= get all patchs of branch v5
+    <host>/api/patchs/get/p00001        <= get patch p00001 of branch v6
+
+
+3. NewPatch [POST]
+Format:
+    <host>/api/patchs/new
+Return:
+    json :
+Example:
+    <host>/api/patchs/new
+
+
+4. Upload [POST]
+Format:
+    <host>/api/upload/<string:branch>/<string:pid>/<string:filename>
+Return:
+    json:
+Example:
+    <host>/api/upload/v5/p00001/file1  <= upload file to v5 patch p00001
+
+
+5. Download 
+Format:
+    <host>/api/download/<string:branch>/<string:pid>/<string:filename>
+Return:
+    json:
+Example:
+    <host>/api/download/v5/p00001/file1  <= download file to v5 patch p00001
+
+
+6. Delete
+Format:
+    <host>/api/delete/<string:branch>/<string:pid>/<string:filename>
+Return:
+    json:
+Example:
+    <host>/api/delete/v5/p00001/file1  <= delete file to v5 patch p00001

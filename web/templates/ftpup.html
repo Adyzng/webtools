@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %} Arcserve Online Toolkit {% endblock title %}
+
+{% block styles %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/metroStyle/metroStyle.css') }}">
+{% endblock styles%}
+
+
+{% block page_panel_1 -%}
+<div id="ftpPage">
+	<div class="page-header">
+		<h3>Ftp Files Upload</h3>
+		<small class="form-text text-muted">Sync the Arcserve UDP php redirect files from Harvest, and upload to ftp docs server.</small>
+	</div>
+
+	<div class="row">
+		<div class="mt-10">
+			<div class="col-sm-12 col-md-5">
+				<div class="list-group">
+					<li class="list-group-item">
+						<span class="badge badge-sync">
+							<a href="#" title="sync from harvest"><i class="fa fa-refresh" data-src="harvest"></i></a>
+						</span>
+						<h4 class="list-group-item-heading">Harvest</h4>
+						<p class="list-group-item-text">\ARCserve\RedirectFiles</p>
+					</li>
+					<li class="list-group-item">
+						<ul id="treeHarvest" class="ztree" data-src="harvest"></ul>
+					</li>
+				</div>
+			</div>
+			<div class="col-sm-12 col-sm-2">
+				<div class="list-group">
+					<button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#idUploadModal" title="sync from harvest, then upload to harvest">
+						Upload <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-5">
+				<div class="list-group">
+					<li class="list-group-item">
+						<span class="badge badge-sync">
+							<a href="#" title="sync from ftp server"><i class="fa fa-refresh" data-src="ftp"></i></a>
+						</span>
+						<h4 class="list-group-item-heading">FTP</h4>
+						<select class="form-control-select" disabled> 
+							<option class="list-group-item-text" selected>/httpdocs</option>
+							<option class="list-group-item-text">/httpsdocs</option>
+						</select>
+					</li>
+					<li class="list-group-item">
+						<ul id="treeFtp" class="ztree" data-src="ftp"></ul>
+					</li>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- popup dialog -->
+	<div class="modal fade" id="idUploadModal" tabindex="-1" role="dialog" aria-labelledby="ftpUpload" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="padding: 15px 30px;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">ftp upload</h4>
+				</div>
+				
+				<div class="modal-body upload-dlg" >
+					<table class="table table-hover">
+						<tbody id="idUploadTable">
+						</tbody>
+					</table>
+				</div>
+
+				<div class="text-center mt-20">
+					<button type="button" class="btn btn-success width-100" id="idUploadConfirm">
+						<i class="fa fa-upload" aria-hidden="true"></i> upload
+					</button>
+					<button type="button" class="btn btn-default width-100" id="idUploadCancel">
+						<i class="fa fa-ban" aria-hidden="true"></i> cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock page_panel_1 %}
+
+
+
+{% block scripts %}
+    {{ super() }}
+	<!-- The file cookie wrapper script -->
+	<script src="{{ url_for('static', filename='js/js.cookie.js') }}"></script>
+	<!-- Textarea autogrowth-->
+	<script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+	<!-- The main application script -->
+	<script src="{{ url_for('static', filename='js/udp.toolkit.js') }}"></script>
+	<!-- TreeGrid plugin -->
+	<script src="{{ url_for('static', filename='js/jquery.ztree.all.min.js') }}"></script>
+{% endblock scripts%}

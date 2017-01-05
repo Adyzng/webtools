@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %} Arcserve Online Toolkit {% endblock title %}
+
+{% block styles %}
+    {{ super() }}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock styles%}
+
+
+{% block page_panel_1 -%}
+<div id="ftpPage">
+	<div class="page-header">
+		<h3>Message Encoding</h3>
+		<small class="form-text text-muted">Source message encoding by UDP, base64, md5, sha1, sha256.</small>
+	</div>
+	
+	<div class="row">
+		<div class="mt-10">
+			<div class="col-sm-12 col-md-8">
+				<form id="idEncrypt" class="form" action="#">
+					<div class="form-group">
+						<label class="control-label" for="idMessage">Source String</label>
+						<textarea class="form-control" rows="4" id="idMessage" name="message"></textarea>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="idBase64">Base64 Encoding</label>
+						<textarea class="form-control" rows="4" id="idBase64" name="base64"></textarea>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="idUDPEnc">UDP Encrypt</label>
+						<textarea class="form-control" rows="4" id="idUDPEnc" name="udpenc"></textarea>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="idMD5">MD5 Digest</label>
+						<input type="text" class="form-control" id="idMD5" name="md5" readonly>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="idSHA1">SHA1 Digest</label>
+						<input type="text" class="form-control" id="idSHA1" name="sha1" readonly>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="idSHA256">SHA256 Digest</label>
+						<input type="text" class="form-control" id="idSHA256" name="sha256" readonly>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary width-100" id="idEncDec">Convert</button>
+						<button type="reset" class="btn btn-primary width-100">Reset</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock page_panel_1 %}
+
+
+
+{% block scripts %}
+    {{ super() }}
+	<!-- The file cookie wrapper script -->
+	<script src="{{ url_for('static', filename='js/js.cookie.js') }}"></script>
+	<!-- Textarea autogrowth-->
+	<script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
+	<!-- The main application script -->
+	<script src="{{ url_for('static', filename='js/udp.toolkit.js') }}"></script>
+	<!-- TreeGrid plugin -->
+	<script src="{{ url_for('static', filename='js/jquery.ztree.all.min.js') }}"></script>
+{% endblock scripts%}
