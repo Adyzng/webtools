@@ -130,6 +130,7 @@ class SyncFtp(Resource, Singleton):
 			self.args = reqparse.RequestParser()
 			self.args.add_argument('type', default='', help='harvest operation type')
 			self.args.add_argument('path', default=None, help='relative path on harvest code path')
+			self.args.add_argument('root', default='/', help='upload root path on the ftp server')
 
 	@classmethod
 	def register(clz, api):
@@ -151,11 +152,19 @@ class SyncFtp(Resource, Singleton):
 		:responce
 			files: [] array of file list
 		'''
-		_path = args['path']
 		_type = args['type']
+		_path = args.get('path', '')
+		_root = args.get('root', '')
 
+		# format two path
 		if _path and _path[0] == '/':
 			_path = _path[1:]
+		#
+		if _root: 
+			ftp_path = os.path.join(_root, _path)
+		else:
+			ftp_path = _path
+		ftp_path = ftp_path.replace('\\', '/')
 
 		files = []
 		errMsg, status = None, ErrorCode.ERR_SUCCESS
@@ -169,20 +178,20 @@ class SyncFtp(Resource, Singleton):
 			try:
 				if _type == 'upload':
 					config = CODEPATH.get(codepath)
-					lpath = os.path.join(config['path'], _path or '/')
-					self.log.info('%s : ftp file upload to %s', codepath, _path or '/')
+					lpath = os.path.join(config['path'], _path)
+					self.log.info('%s : file upload to ftp %s', codepath, ftp_path)
 
 					if os.path.isfile(lpath):
-						ftpc.upload_file(lpath, subpath=_path)
+						ftpc.upload_file(lpath, subpath=ftp_path)
 					elif os.path.isdir(lpath):
-						ftpc.upload_dir(lpath, subpath=_path, recursive=True)
+						ftpc.upload_dir(lpath, subpath=ftp_path, recursive=True)
 					else:
 						status = ErrorCode.ERR_UN_CODEPATH
 						errMsg = 'unknown local path : %s' % _path
 
 				elif _type == 'download':
-					self.log.info('download ftp file %s', _path)
-					lfile = ftpc.download(_path)
+					self.log.info('download ftp file %s', ftp_path)
+					lfile = ftpc.download(ftp_path)
 					if lfile:
 						filename = os.path.basename(lfile)
 						return send_from_directory(os.path.dirname(lfile), filename=filename, as_attachment=True, attachment_filename=filename)
@@ -191,8 +200,8 @@ class SyncFtp(Resource, Singleton):
 						errMsg = 'Failed to download file {0} from ftp server.'.format(_path)
 				
 				else:
-					self.log.info('%s : ftp file list of %s', codepath, _path or '/')
-					files = ftpc.listdir(_path)
+					self.log.info('%s : ftp file list of %s', codepath, ftp_path)
+					files = ftpc.listdir(ftp_path)
 
 			except Exception as e:
 				self.log.error('Exception : %s', e)

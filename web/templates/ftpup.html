@@ -44,10 +44,11 @@
 						<span class="badge badge-sync">
 							<a href="#" title="sync from ftp server"><i class="fa fa-refresh" data-src="ftp"></i></a>
 						</span>
-						<h4 class="list-group-item-heading">FTP</h4>
-						<select class="form-control-select" disabled> 
-							<option class="list-group-item-text" selected>/httpdocs</option>
-							<option class="list-group-item-text">/httpsdocs</option>
+						<h4 class="list-group-item-heading">FTP Server</h4>
+						<select id="idFtpRoot" class="form-control-select"> 
+							{% for path in rootpaths %}
+								<option class="list-group-item-text">{{ path }}</option>
+							{% endfor %}
 						</select>
 					</li>
 					<li class="list-group-item">
@@ -66,7 +67,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title">ftp upload</h4>
+					<h4 class="modal-title">ftp upload => </h4>
 				</div>
 				
 				<div class="modal-body upload-dlg" >

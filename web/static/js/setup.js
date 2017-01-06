@@ -1,5 +1,7 @@
 $(function () {
     'use strict';
+    // text area auto grow
+	autosize($('textarea'));
 
     // browse folder
     function browseFolder(path) {
@@ -103,7 +105,7 @@ $(function () {
             'host': host, 
             'username': user, 
             'password': pswd, 
-            'subpath': subp
+            'rootpaths': subp
         });
 
         // check user name and password with server

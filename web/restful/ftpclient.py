@@ -101,9 +101,11 @@ class FtpClient:
         if self._ftpc is None:
             raise ValueError('FTP %s is not connected yet.' % self._host)
         
-        if remotepath[0] in ('\\', '/'):
-            remotepath = remotepath[1:]
-            remotepath = os.path.join(self._root, remotepath).replace('\\', '/')
+        if not remotepath:
+            remotepath = self._root
+        else:
+            #remotepath = remotepath[1:]
+            remotepath = remotepath.replace('\\', '/')
         
         if not localpath:
             localpath = os.path.join(os.environ['TEMP'], os.path.basename(remotepath))
@@ -138,9 +140,6 @@ class FtpClient:
         if not subpath:
             subpath = self._root
         else:
-            if subpath[0] in ('\\', '/'):
-                subpath = subpath[1:]
-            subpath = os.path.join(self._root, subpath)
             subpath = subpath.replace('\\', '/')
         
         dirname = os.path.dirname(subpath)
@@ -168,9 +167,7 @@ class FtpClient:
         if not subpath:
             subpath = self._root
         else:
-            if subpath[0] in ('\\', '/'):
-                subpath = subpath[1:]
-            subpath = os.path.join(self._root, subpath).replace('\\', '/')
+            subpath = subpath.replace('\\', '/')
 
         if recursive:
             if not self._ftpc.exists(subpath):
@@ -193,9 +190,7 @@ class FtpClient:
         if not subpath:
             curpath = self._root
         else:
-            if subpath[0] in ('\\', '/'):
-                subpath = subpath[1:]
-            curpath = os.path.join(self._root, subpath).replace('\\', '/')
+            curpath = subpath.replace('\\', '/')
 
         files, dirs = [], []
         for entry in self._ftpc.listdir(curpath):
