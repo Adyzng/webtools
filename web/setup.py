@@ -70,7 +70,7 @@ class WebSetup(object):
         '''setup config ftp server information
         
         :request:
-            {ftps: [ {name : name, host: host, username: user, password: pswd, subpath: subp}, {} ]}
+            {ftps: [ {name : name, host: host, username: user, password: pswd, rootpaths: subp}, {} ]}
         :response:
             {status: 0, message: ''}
         '''
@@ -83,7 +83,7 @@ class WebSetup(object):
             host = ftp.get('host')
             user = ftp.get('username')
             pswd = ftp.get('password')
-            path = ftp.get('subpath') or '/'
+            paths = ftp.get('rootpaths', '')
             if not (host and user and pswd):
                 WebSetup.log.warn('ftp {0} is not valid'.format(name))
                 continue
@@ -92,10 +92,19 @@ class WebSetup(object):
             FTPLIST[name]['server'] = host
             FTPLIST[name]['username'] = user
             FTPLIST[name]['password'] = pswd
-            FTPLIST[name]['rootpath'] = path 
+
+            idx = 0
+            for path in paths.split('\n'):
+                if not path:
+                    continue
+                if idx == 0:
+                    FTPLIST[name]['rootpath'] = path
+                else:
+                    FTPLIST[name]['rootpath{0}'.format(idx)] = path
+                idx += 1
 
             ncount += 1
-            WebSetup.log.info('ftp {0}: {1}'.format(ncount, host))
+            WebSetup.log.info('ftp {0}: {1}'.format(name, host))
         
         if ncount:
             status = ErrorCode.ERR_SUCCESS

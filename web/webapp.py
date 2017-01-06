@@ -65,6 +65,19 @@ class WebApp(object):
         self.log.info('Flask web application stopped.')
 
     @staticmethod
+    def pathlist(ftp):
+        idx = 1 # start from idx 1
+        paths = [ftp['rootpath'],]
+        while True:
+            rpn = ftp.get('rootpath{0}'.format(idx), None)
+            if rpn:
+                paths.append(rpn)
+                idx += 1
+            else:
+                break
+        return paths
+
+    @staticmethod
     @app.cli.command('initdb')
     def initdb_command():
         '''Initializes the database.'''
@@ -73,9 +86,9 @@ class WebApp(object):
     
     @staticmethod
     @app.route('/')
-    @app.route('/ftpupload')
+    @app.route('/redirect')
     def ftpup():
-        return render_template('ftpup.html', page='ftpup')
+        return render_template('ftpup.html', page='ftpup', rootpaths=WebApp.pathlist(REDIRECT['ftp']))
 
     @staticmethod
     @app.route('/timeconvert')
@@ -100,11 +113,17 @@ class WebApp(object):
     @staticmethod
     @app.route('/setup')
     def setup():
+        rdtftp = dict()
+        for key,val in FTPLIST.iteritems():
+            if REDIRECT['ftp'] == val:
+                rdtftp.update(val, name=key, paths='\n'.join(WebApp.pathlist(REDIRECT['ftp'])))
+                break
+        
         environ = {
             'harvest' : HARVEST,
             'environ' : ENVIRONS,
             'redirect' : REDIRECT,
-            'ftp' : REDIRECT['ftp'],
+            'ftp' : rdtftp
         }
         return render_template('setup.html', env=environ)
 

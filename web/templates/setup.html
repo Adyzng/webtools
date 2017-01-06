@@ -74,7 +74,7 @@
 					<div class="form-group">
 						<label class="control-label" for="ftpHost">Ftp Host</label>
 						<input type="text" class="form-control" id="ftpHost" name="ftpHost" value="{{ env.ftp.server }}">
-						<small class="form-text text-muted">ftp server address. Eg: ftp://127.0.0.1</small>
+						<small class="form-text text-muted">ftp server address. eg: ftp://127.0.0.1</small>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="ftpUser">Ftp User</label>
@@ -87,9 +87,9 @@
 						<small class="form-text text-muted">ftp server Password</small>
 					</div>
 					<div class="form-group">
-						<label class="control-label" for="ftpSubp">Ftp Subpath</label>
-						<input type="text" class="form-control" id="ftpSubp" name="ftpSubp" value="{{ env.ftp.rootpath }}">
-						<small class="form-text text-muted">subpath on ftp server used to save redirect files.</small>
+						<label class="control-label" for="ftpSubp">Paths on Ftp</label>
+						<textarea type="text" class="form-control" rows="2" id="ftpSubp" name="ftpSubp">{{ env.ftp.paths }}</textarea>
+						<small class="form-text text-muted">subpath on ftp server used to save redirect files. Each line for one path.</small>
 					</div>
 					<div class="form-group">
 						<div class="pull-right">
@@ -185,4 +185,5 @@
 {% block scripts %}
     {{ super() }}
 	<script src="{{ url_for('static', filename='js/setup.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/autosize.min.js') }}"></script>
 {% endblock scripts%}

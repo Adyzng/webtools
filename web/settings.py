@@ -176,7 +176,7 @@ class ConfigLoader(object) :
                 )
                 
                 # save to file
-                json.dump(config, fp, indent=4, ensure_ascii=False)
+                json.dump(config, fp, indent=4, ensure_ascii=False, sort_keys=True)
             
             # rename file
             try:

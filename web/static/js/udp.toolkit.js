@@ -177,10 +177,12 @@ $(document).ready(function() {
 		if (treeNode.isInit || !treeNode.isParent)
 			return true;
 		
+		var ftpRoot = $('#idFtpRoot').val().trim();
 		var src = $('#' + treeId).data('src');
 		if (src === 'ftp') $('#' + treeId).isLoading();
 
-		$.get('/toolkit/' + src + '/redirect', {'path': treeNode.path, 'type' : 'files'}, function(data){
+		
+		$.get('/toolkit/' + src + '/redirect', {'path': treeNode.path, 'type' : 'files' }, function(data){
 			var childNodes = [];
 			if (data.status === 15) {
 				console.log(data);
@@ -250,13 +252,18 @@ $(document).ready(function() {
 	};
 
 	// clean all zTree nodes
-	function zTreeCleanNodes(treeId) {
+	function zTreeCleanNodes(treeId, ftpRoot) {
 		var treeObj = $.fn.zTree.getZTreeObj(treeId);
 		if (treeObj) {
 			treeObj.getNodes().forEach(function(node){
 				node.isInit = false;
 				treeObj.removeChildNodes(node);
 				treeObj.expandNode(node, false);
+
+				// set new ftp root path
+				if (treeId === ID_ZTREE['ftp'] && typeof(ftpRoot) !== "undefined" ) {
+					node.path = ftpRoot;
+				}
 			});
 		};
 	};
@@ -277,6 +284,17 @@ $(document).ready(function() {
 		// download file
 		window.open(url, '_blank');
 	};
+
+	/**
+	 *  zTree initialize !important
+	 */
+	zTreeInit();
+
+	// ftp root path change
+	$('#idFtpRoot').change(function(e){
+		var ftpRoot = $('#idFtpRoot').val().trim();
+		zTreeCleanNodes(ID_ZTREE['ftp'], ftpRoot);
+	}).change(); // called after zTreeInit
 
 	// get tree node's children
 	$('#ftpPage .fa-refresh').click( function(e){
@@ -303,7 +321,8 @@ $(document).ready(function() {
 		self.parent().attr('disabled', true);
 		stopStartSpin(true);
 
-		$.get('/toolkit/' + src + '/redirect', {'type' : 'sync'}, function(data){
+		var ftpRoot = $('#idFtpRoot').val().trim();
+		$.get('/toolkit/' + src + '/redirect', {'type' : 'sync', 'root': ftpRoot }, function(data){
 			self.removeData('sync');
 
 			if (data.status === 0) {
@@ -325,6 +344,10 @@ $(document).ready(function() {
 	$('#idUploadModal').on('show.bs.modal', function (event) {
 		if ($('#idUploadConfirm').data('uploading'))
 			return;
+		
+		// title change
+		var ftpRoot = $('#idFtpRoot').val().trim();
+		$(this).find('.modal-title').text('ftp upload => ' + ftpRoot);
 
 		var zTree = $.fn.zTree.getZTreeObj(ID_ZTREE.harvest);
 		if (zTree === undefined) return false;
@@ -364,6 +387,9 @@ $(document).ready(function() {
 		if(toupload.length === 0)
 			return false;
 		
+		var ftpRoot = $('#idFtpRoot').val().trim();
+		console.log('upload to ' + ftpRoot);
+
 		// upload function
 		function svrUpload(self) {
 			var path = self.children(':eq(1)').text();
@@ -372,7 +398,7 @@ $(document).ready(function() {
 				.css('color', '')
 				.attr('class', 'fa fa-refresh fa-spin');
 			
-			$.post('/toolkit/ftp/redirect', {'type': 'upload','path': path}, function (data) {
+			$.post('/toolkit/ftp/redirect', {'type': 'upload', 'path': path, 'root': ftpRoot }, function (data) {
 				if (data.status) {
 					console.log('upload failed: ' + path + '; error: ' + data.message);
 					self.children(':last').text('please retry');
@@ -417,9 +443,4 @@ $(document).ready(function() {
 	$('#idUploadCancel').click(function(e){
 		$('#idUploadModal').modal('hide');
 	});	
-
-	/**
-	 *  zTree initialize !important
-	 */
-	zTreeInit();
 });
