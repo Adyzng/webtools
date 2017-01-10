@@ -180,7 +180,8 @@ class ConfigLoader(object) :
             
             # rename file
             try:
-                os.remove(clz.CONFIG_FILE)
+                if os.path.exists(clz.CONFIG_FILE):
+                    os.remove(clz.CONFIG_FILE)
                 os.rename(tmp_file, clz.CONFIG_FILE)
             except:
                 pass

@@ -18,13 +18,12 @@ class WebSetup(object):
     log = init_logger()
 
     # register in Flask application
-    @staticmethod
-    def register(app):
+    @classmethod
+    def register(clz, app):
         if not isinstance(app, Flask):
             raise TypeError('app should be an instance of `flask.Flask`')
         else:
-            app.register_blueprint(WebSetup.api, url_prefix='/setup')
-        
+            app.register_blueprint(clz.api, url_prefix='/setup')
 
     # harvert setup
     @staticmethod

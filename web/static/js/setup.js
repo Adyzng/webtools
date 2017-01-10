@@ -125,6 +125,9 @@ $(function () {
             if (bSucceed) {
                 $('#pageTwo').hide();
                 $('#pageThree').show();
+
+                $('#rdtFtpSvr').empty()
+                    .append('<option class="list-group-item-text">' + host + '</option>');
             }
         });
     });
