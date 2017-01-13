@@ -122,7 +122,7 @@ class ConfigLoader(object) :
                     I18N['ftp'] = FTPLIST.get(i18n.get('ftp'))
                 del js
         except Exception as e:
-            print("failed to load webapp configuration: {0}".format(clz.CONFIG_FILE))
+            print("failed to load webapp configuration: {0}".format(config_file))
             raise
         finally:
             os.chdir(opath)

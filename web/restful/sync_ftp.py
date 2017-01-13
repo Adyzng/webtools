@@ -129,7 +129,7 @@ class SyncFtp(Resource, Singleton):
 			self.lck = Lock()
 			self.args = reqparse.RequestParser()
 			self.args.add_argument('type', default='', help='harvest operation type')
-			self.args.add_argument('path', default=None, help='relative path on harvest code path')
+			self.args.add_argument('path', default='', help='relative path on harvest code path')
 			self.args.add_argument('root', default='/', help='upload root path on the ftp server')
 
 	@classmethod
@@ -204,9 +204,9 @@ class SyncFtp(Resource, Singleton):
 					files = ftpc.listdir(ftp_path)
 
 			except Exception as e:
-				self.log.error('Exception : %s', e)
 				status = ErrorCode.ERR_SERVER_EXP
-				errMsg = e.message
+				errMsg = 'Exception : {0}'.format(e)
+				self.log.error(errMsg)
 			break # while
 		
 		return ReplyJson(status, msg=errMsg, files=files, count=len(files))

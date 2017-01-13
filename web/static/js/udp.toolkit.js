@@ -184,8 +184,9 @@ $(document).ready(function() {
 		
 		$.get('/toolkit/' + src + '/redirect', {'path': treeNode.path, 'type' : 'files' }, function(data){
 			var childNodes = [];
-			if (data.status === 15) {
+			if (data.status) {
 				console.log(data);
+				alert(data.message);
 				return false;
 			}
 

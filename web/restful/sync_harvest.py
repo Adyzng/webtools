@@ -35,7 +35,7 @@ class SyncHarvest(Resource, Singleton):
 			self.lock = Lock()
 			self.args = reqparse.RequestParser()
 			self.args.add_argument('type', default='', help='harvest operation type')
-			self.args.add_argument('path', default=None, help='relative path on harvest code path')
+			self.args.add_argument('path', default='', help='relative path on harvest code path')
 	
 	
 	@classmethod
