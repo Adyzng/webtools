@@ -12,6 +12,7 @@ from harvest import Harvest
 
 #from flask import request
 from flask_restful import Resource, Api, reqparse
+from flask import send_from_directory
 
 from web.helper import ErrorCode, ReplyJson, init_logger, Singleton
 from web.settings import CODEPATH
@@ -50,7 +51,7 @@ class SyncHarvest(Resource, Singleton):
 			<>/toolkit/harvest/redirect?type=sync
 			<>/toolkit/harvest/redirect?type=files&path=/
 		'''
-		_path = args['path']
+		_path = args['path'] or ""
 		_type = args['type'].lower()
 
 		if _path and _path[0] == '/':
@@ -101,6 +102,7 @@ class SyncHarvest(Resource, Singleton):
 
 			except Exception as e:
 				self.log.error('SyncHarvest Exception : %s', e)
+				self.log.exception('Exception')
 				status = ErrorCode.ERR_SERVER_EXP
 				errMsg = e.message
 

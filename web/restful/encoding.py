@@ -69,7 +69,7 @@ class MessageEncoder(Resource):
 					return out_buf.value
 		except Exception as e:
 			self.log.error('Call native library [AFCoreFunction.dll] failed. err = %X.', ctypes.GetLastError())
-			self.log.error('udp_enc_dec() exception: %s', e)
+			self.log.exception('Exception')
 		finally:
 			os.chdir(cur_dir)
 		return None
@@ -111,7 +111,7 @@ class MessageEncoder(Resource):
 				sha256 = hashlib.sha256(source).hexdigest()
 
 		except Exception as e:
-			self.log.error('Message EncDec Exception : %s', e)
+			self.log.exception('Exception')
 			status = ErrorCode.ERR_ENCRYPT_MSG
 			return ReplyJson(status, errmsg, source=source)
 		

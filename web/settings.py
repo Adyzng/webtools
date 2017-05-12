@@ -90,7 +90,7 @@ class ConfigLoader(object) :
                 # environ related config
                 env = js.get('environ', None)
                 if env and ENVIRONS:
-                    ENVIRONS['udpbin'] = os.path.abspath(env.get('udpbin', ""))
+                    ENVIRONS['udpbin'] = os.path.abspath(env.get('udpbin')) if env.get('udpbin') else ""
                     ENVIRONS['webstore'] = os.path.abspath(env.get('store') or ENVIRONS['webstore'])
                 if not ENVIRONS.get('udpbin'):
                     try:
@@ -180,7 +180,8 @@ class ConfigLoader(object) :
             
             # rename file
             try:
-                os.remove(clz.CONFIG_FILE)
+                if os.path.exists(clz.CONFIG_FILE):
+                    os.remove(clz.CONFIG_FILE)
                 os.rename(tmp_file, clz.CONFIG_FILE)
             except:
                 pass

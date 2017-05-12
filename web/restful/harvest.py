@@ -71,6 +71,7 @@ class Harvest:
 
         except Exception as e:
             log.error('read_ini() exception: %s', e)
+            log.exception('Exception')
             
         return option
     
@@ -95,6 +96,7 @@ class Harvest:
             )
         except Exception as e:
             log.error('Generate harvest user file exception: %s', e)
+            log.exception('Exception')
             raise
 
 
@@ -145,9 +147,11 @@ class Harvest:
                                 os.remove(fp)
                             except Exception as e:
                                 log.warn('failed to delete file : ', fp)
+                                log.exception('Exception')
 
         except Exception as e:
             log.error('Harvest checkout exception: %s', e)
+            log.exception('Exception')
             raise
     
     def _wrap_item(self, entry, rootpath, isfile=False, subpath=None, scmpath=None):

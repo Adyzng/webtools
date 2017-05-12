@@ -57,6 +57,7 @@ class WebApp(object):
             ModelDB().init_db(db_path=dbpath)
         except Exception as e:
             self.log.warn('initialize db exception : %s', e)
+            self.log.exception('Exception')
         
     def run(self, port=5000):
         # setup page
