@@ -12,6 +12,7 @@ from ftpclient import FtpClient
 
 #from flask import request
 from flask_restful import Resource, Api, reqparse
+from flask import send_from_directory
 
 from web.helper import ErrorCode, ReplyJson, init_logger, Singleton
 from web.settings import CODEPATH
@@ -69,6 +70,7 @@ class FtpObject(object):
 				self.log.info('connected to ftp: %s', self.ftp.host)
 				
 		except Exception as e:
+			self.log.exception('Exception')
 			self.ftp = None
 			raise
 		finally:
@@ -153,8 +155,9 @@ class SyncFtp(Resource, Singleton):
 			files: [] array of file list
 		'''
 		_type = args['type']
-		_path = args.get('path', '')
-		_root = args.get('root', '')
+		_path = args.get('path') or ''
+		_root = args.get('root') or ''
+		self.log.info("sync_ftp: %s/%s", _path, _root)
 
 		# format two path
 		if _path and _path[0] == '/':
@@ -204,6 +207,7 @@ class SyncFtp(Resource, Singleton):
 					files = ftpc.listdir(ftp_path)
 
 			except Exception as e:
+				self.log.exception('sync_ftp() Exception')
 				status = ErrorCode.ERR_SERVER_EXP
 				errMsg = 'Exception : {0}'.format(e)
 				self.log.error(errMsg)

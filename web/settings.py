@@ -90,7 +90,7 @@ class ConfigLoader(object) :
                 # environ related config
                 env = js.get('environ', None)
                 if env and ENVIRONS:
-                    ENVIRONS['udpbin'] = os.path.abspath(env.get('udpbin', ""))
+                    ENVIRONS['udpbin'] = os.path.abspath(env.get('udpbin')) if env.get('udpbin') else ""
                     ENVIRONS['webstore'] = os.path.abspath(env.get('store') or ENVIRONS['webstore'])
                 if not ENVIRONS.get('udpbin'):
                     try:

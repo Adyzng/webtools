@@ -57,6 +57,7 @@ class WebSetup(object):
                 status = ErrorCode.ERR_SERVER_EXP
                 errmsg = 'WebSetup.harvest exception : {0}'.format(e)
                 WebSetup.log.error(errmsg)
+                WebSetup.log.exception('Exception')
 
             break	# while loop
         
@@ -179,6 +180,7 @@ class WebSetup(object):
                 errmsg = 'save config exception: {0}'.format(e)
                 status = ErrorCode.ERR_SERVER_EXP
                 WebSetup.log.error(errmsg)
+                WebSetup.log.exception('Exception')
 
             break # while loop
 

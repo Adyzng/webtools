@@ -11,6 +11,7 @@ pyftp/
 
 # web config file
 webapp.json
+*.log
 
 # python complied files
 *.pyc

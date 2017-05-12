@@ -71,6 +71,7 @@ class FtpClient:
         except Exception as e:
             errMsg = 'failed to connect %s://%s:%s' % (self._prot, self._host, self._port)
             self.log.error(errMsg)
+            self.log.exception('Exception')
             raise Exception(errMsg)
     
     def close(self):
@@ -79,7 +80,8 @@ class FtpClient:
                 self._ftpc.close()
                 self._ftpc = None
         except Exception as e:
-            self.log.warn('failed to close ftp connection : %s', e)
+            #self.log.warn('failed to close ftp connection : %s', e)
+            self.log.exception('Exception')
 
     def download_d(self):
         '''Download ftp files to local path'''
